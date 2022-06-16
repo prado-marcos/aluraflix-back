@@ -39,6 +39,19 @@ class VideoController {
             }
         });
     };
+
+    static atualizarVideo = (req, res) => {
+        const id = req.body.id;
+        Video.findByIdAndUpdate(id, { $ser: req.body }, (err) => {
+            if (err) {
+                res.status(500).send({
+                    message: `${err.message} - Erro na atualização`,
+                });
+            } else {
+                res.status(201).send({ message: "Atualizado com sucesso" });
+            }
+        });
+    };
 }
 
 module.exports = VideoController;
