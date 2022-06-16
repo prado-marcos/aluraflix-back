@@ -13,8 +13,8 @@ class VideoController {
 
     static acessaVideoPorId = (req, res) => {
         const id = req.params.id;
-        console.log("params: " + req.params)
-        console.log("body: " + req.body)
+        console.log("params: " + req.params);
+        console.log("body: " + req.body);
         Video.findById(id, (err, video) => {
             if (err) {
                 res.status(400).send({
@@ -23,6 +23,19 @@ class VideoController {
             } else {
                 console.log(`${video}`);
                 res.status(200).send(video);
+            }
+        });
+    };
+
+    static cadastrarVideo = (req, res) => {
+        const video = new Video(req.body);
+        video.save((err) => {
+            if (err) {
+                res.status(500).send({
+                    message: `${err.message} - Não foi possível cadastar o video`,
+                });
+            } else {
+                res.status(200).json(video);
             }
         });
     };
