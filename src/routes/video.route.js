@@ -7,6 +7,7 @@ router
     .get("/videos", VideoController.listarVideos)
     .get("/videos/:id", VideoController.acessaVideoPorId)
     .post("/videos", VideoController.cadastrarVideo)
-    .put("/videos/:id", VideoController.atualizarVideo);
+    .put("/videos/:id", VideoController.atualizarVideo)
+    .delete("/videos/:id", VideoController.excluirVideo);
 
 module.exports = router;
