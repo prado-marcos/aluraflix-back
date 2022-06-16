@@ -52,6 +52,19 @@ class VideoController {
             }
         });
     };
+
+    static excluirVideo = (req, res) => {
+        const id = req.params.id;
+        Video.findByIdAndDelete(id, (err) => {
+            if (err) {
+                res.status(500).send({
+                    message: `${err.message} - Erro na exclusão`,
+                });
+            } else {
+                res.status(200).send({ message: "Exclusão feita com sucesso" });
+            }
+        });
+    };
 }
 
 module.exports = VideoController;
