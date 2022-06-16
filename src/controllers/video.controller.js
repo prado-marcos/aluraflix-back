@@ -41,8 +41,8 @@ class VideoController {
     };
 
     static atualizarVideo = (req, res) => {
-        const id = req.body.id;
-        Video.findByIdAndUpdate(id, { $ser: req.body }, (err) => {
+        const id = req.params.id;
+        Video.findByIdAndUpdate(id, { $set: req.body }, (err) => {
             if (err) {
                 res.status(500).send({
                     message: `${err.message} - Erro na atualização`,
