@@ -6,6 +6,7 @@ const router = express.Router();
 router
     .get("/videos", VideoController.listarVideos)
     .get("/videos/:id", VideoController.acessaVideoPorId)
-    .put("/videos", VideoController.cadastrarVideo);
+    .post("/videos", VideoController.cadastrarVideo)
+    .put("/videos", VideoController.atualizarVideo)
 
 module.exports = router;
