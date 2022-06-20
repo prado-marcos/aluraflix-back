@@ -1,10 +1,16 @@
 const mongoose = require("mongoose");
+const urlRegex =
+    /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
 
 const videoSchema = new mongoose.Schema({
-    id: { type: String },
+    categoriaId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Categoria",
+        required: [true, "Categoria é obrigatório"],
+    },
     titulo: {
         type: String,
-        maxlength: 70,
+        maxlength: 100,
         required: [true, "Título é obrigatório"],
     },
     descricao: {
@@ -15,16 +21,10 @@ const videoSchema = new mongoose.Schema({
     url: {
         type: String,
         maxlength: 2000,
-        required: [true, "URL é obrigatório"],
+        match: [urlRegex, "URL é obrigatório"],
         validate: [urlValidator, "URL inválida"],
     },
 });
-
-function urlValidator(url) {
-    urlRegex =
-        /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
-    return urlRegex.test(url);
-}
 
 const Video = mongoose.model("Video", videoSchema);
 
