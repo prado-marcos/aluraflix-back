@@ -1,12 +1,15 @@
 const mongoose = require("mongoose");
+//
+const Categoria = require("./categoria.model.js");
+//
 const urlRegex =
     /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
 
 const videoSchema = new mongoose.Schema({
     categoriaId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Categoria",
-        required: [true, "Categoria é obrigatório"],
+        ref: "categoria",
+        default: cadastrarCategoriaPadrao,
     },
     titulo: {
         type: String,
@@ -22,10 +25,16 @@ const videoSchema = new mongoose.Schema({
         type: String,
         maxlength: 2000,
         match: [urlRegex, "URL é obrigatório"],
-        validate: [urlValidator, "URL inválida"],
+        required: [true, "URL inválida"],
     },
 });
 
-const Video = mongoose.model("Video", videoSchema);
+function cadastrarCategoriaPadrao() {
+    const categoria = new Categoria();
+    categoria.save();
+    return categoria;
+}
+
+const Video = mongoose.model("video", videoSchema);
 
 module.exports = Video;
