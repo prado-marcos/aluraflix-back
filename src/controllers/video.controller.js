@@ -26,6 +26,19 @@ class VideoController {
         });
     };
 
+    static acessarVideosPorTitulo = (req, res) => {
+        const search = req.query.titulo;
+        Video.find({ titulo: search }, (err, videos) => {
+            if (err) {
+                res.status(400).send({
+                    message: `${err.message} - Video não encontado`,
+                });
+            } else {
+                res.status(200).send(videos);
+            }
+        });
+    };
+
     static acessarVideosPorCategoria = (req, res) => {
         const categoria = req.params.id;
         Video.find({ categoriaId: categoria }, (err, video) => {
